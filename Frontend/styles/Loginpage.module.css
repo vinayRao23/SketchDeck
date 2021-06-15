@@ -1,0 +1,41 @@
+.image {
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-drag: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+}
+
+.btnGithub {
+  background: #000;
+  border: none;
+  width: 30%;
+  height: 8%;
+  position: absolute;
+  color: #fff;
+  font-weight: bold;
+  font-size: 110%;
+  border-radius: 1.5%;
+}
+
+.btnGithub:hover,
+.btnGithub:focus {
+  background: #000;
+}
+
+.btnGoogle {
+  background: #de5246;
+  border: none;
+  width: 30%;
+  height: 8%;
+  position: absolute;
+  color: #fff;
+  font-weight: bold;
+  font-size: 110%;
+  border-radius: 1.5%;
+}
+
+.btnGoogle:hover,
+.btnGoogle:focus {
+  background: #de5246;
+}
