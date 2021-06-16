@@ -1,0 +1,20 @@
+type Query {
+  getAllUsers: [User]
+}
+
+type Mutation {
+  registerUser(
+    username: String
+    email: String
+    profilePicture: String
+    id: String
+  ): Boolean!
+  loginUser(email: String): Boolean!
+}
+
+type User {
+  username: String
+  email: String
+  profilePicture: String
+  id: String
+}
