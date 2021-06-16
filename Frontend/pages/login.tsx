@@ -1,8 +1,22 @@
 import React from "react";
 import styles from "../styles/Loginpage.module.css";
 import { useRouter } from "next/dist/client/router";
+import { signIn, providers, useSession } from "next-auth/client";
+import { AppProvider } from "next-auth/providers";
 
-export const login = () => {
+export const getServerSideProps = async () => {
+  const myProviders = await providers();
+  return {
+    props: {
+      myProviders,
+    },
+  };
+};
+interface IProps {
+  myProviders: Record<string, AppProvider> | null;
+}
+
+export const login = ({ myProviders }: IProps) => {
   const router = useRouter();
   return (
     <>
@@ -30,84 +44,137 @@ export const login = () => {
             height: "57%",
           }}
         />
-        <p style={{ marginTop: "33%", marginLeft: "23.5%", fontWeight: 300 }}>
-          Login To Your Account
-        </p>
-        <p
-          style={{
-            marginTop: "-1%",
-            marginLeft: "11.75%",
-            fontWeight: "lighter",
-          }}
-        >
-          Welcome To SketchDeck. To Start Playing, Login To Your Account Here.{" "}
-        </p>
-      </div>
-      <div>
-        <h2 style={{ marginLeft: "55%", marginTop: "-30%", fontSize: "200%" }}>
-          Welcome To SketchDeck
-        </h2>
-        <p
-          style={{
-            marginLeft: "55.25%",
-            marginTop: "-1%",
-            fontWeight: 200,
-          }}
-        >
-          By signing in you accept our
-        </p>
-        <p
-          style={{ marginLeft: "55.25%", marginTop: "-0.75%", fontWeight: 200 }}
-        >
-          <a
-            href="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
-            style={{ color: "#020081" }}
-            target="_blank"
+        <div>
+          <p style={{ marginTop: "33%", marginLeft: "23.5%", fontWeight: 300 }}>
+            Login To Your Account
+          </p>
+          <p
+            style={{
+              marginTop: "-1%",
+              marginLeft: "11.75%",
+              fontWeight: "lighter",
+            }}
           >
-            Privacy Policy
-          </a>{" "}
-          and{" "}
-          <a
-            href="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
-            style={{ color: "#020081" }}
-            target="_blank"
+            Welcome To SketchDeck. To Start Playing, Login To Your Account Here.{" "}
+          </p>
+        </div>
+        <div>
+          <h2
+            style={{ marginLeft: "55%", marginTop: "-30%", fontSize: "200%" }}
           >
-            Terms of Service
-          </a>
-          .
-        </p>
-        <button
-          className={styles.btnGithub}
-          style={{ marginLeft: "55.25%", marginTop: "2%" }}
-        >
-          <div style={{ marginLeft: "6%" }}>
-            <i
-              className="fa fa-github fa-2x"
-              style={{
-                position: "fixed",
-                marginLeft: "-2.75%",
-                marginTop: "-0.58%",
-              }}
-            />
-            Continue With Github
-          </div>
-        </button>
-        <button
-          className={styles.btnGoogle}
-          style={{ marginLeft: "55.25%", marginTop: "7%" }}
-        >
-          <div style={{ marginLeft: "6%" }}>
-            <i
-              className="fa fa-google fa-2x"
-              style={{
-                position: "fixed",
-                marginLeft: "-2.75%",
-                marginTop: "-0.58%",
-              }}
-            />
-            Continue With Google
-          </div>
-        </button>
+            Welcome To SketchDeck
+          </h2>
+          <p
+            style={{
+              marginLeft: "55.25%",
+              marginTop: "-1%",
+              fontWeight: 200,
+            }}
+          >
+            By signing in you accept our
+          </p>
+          <p
+            style={{
+              marginLeft: "55.25%",
+              marginTop: "-0.75%",
+              fontWeight: 200,
+            }}
+          >
+            <a
+              href="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+              style={{ color: "#020081" }}
+              target="_blank"
+            >
+              Privacy Policy
+            </a>{" "}
+            and{" "}
+            <a
+              href="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+              style={{ color: "#020081" }}
+              target="_blank"
+            >
+              Terms of Service
+            </a>
+            .
+          </p>
+        </div>
+        {myProviders &&
+          Object.values(myProviders).map((p: any) => {
+            if (p.name.includes("Google")) {
+              return (
+                <div
+                  style={{ marginTop: "6%", marginLeft: "55.25%" }}
+                  onClick={() =>
+                    signIn(p.id, { callbackUrl: "http://localhost:3000/home" })
+                  }
+                >
+                  <a
+                    className={`btn btn-primary btn-block py-2 mb-3 ${styles.btnGoogle}`}
+                    style={{ cursor: "pointer" }}
+                  >
+                    <i
+                      className="fa fa-google fa-2x mr-1"
+                      style={{
+                        bottom: "-16%",
+                        fontWeight: "bold",
+                        left: "20%",
+                        position: "relative",
+                      }}
+                    ></i>
+                    <span
+                      className="font-weight-bold"
+                      style={{
+                        bottom: "-5%",
+                        fontWeight: "bold",
+                        marginLeft: "23%",
+                        position: "relative",
+                      }}
+                    >
+                      Continue with Google
+                    </span>
+                  </a>
+                </div>
+              );
+            } else {
+              return (
+                <div
+                  style={{
+                    marginTop: "1%",
+                    marginLeft: "55.25%",
+                  }}
+                  onClick={() =>
+                    signIn(p.id, { callbackUrl: "http://localhost:3000/home" })
+                  }
+                >
+                  <a
+                    className={`btn btn-primary btn-block py-2 mb-3 ${styles.btnGithub}`}
+                    style={{ cursor: "pointer" }}
+                  >
+                    <i
+                      className="fa fa-github fa-2x mr-1"
+                      style={{
+                        bottom: "-16%",
+                        fontWeight: "bold",
+                        left: "20%",
+                        position: "relative",
+                      }}
+                    ></i>
+                    <span
+                      className="font-weight-bold"
+                      style={{
+                        bottom: "-5%",
+                        fontWeight: "bold",
+                        marginLeft: "23%",
+                        position: "relative",
+                      }}
+                    >
+                      Continue with Github
+                    </span>
+                  </a>
+                </div>
+              );
+            }
+          })}
       </div>
     </>
   );
