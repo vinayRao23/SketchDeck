@@ -6,12 +6,14 @@ export const REGISTER = gql`
     $username: String
     $profilePicture: String
     $id: String
+    $theme: String
   ) {
     registerUser(
       username: $username
       email: $email
       profilePicture: $profilePicture
       id: $id
+      theme: $theme
     )
   }
 `;

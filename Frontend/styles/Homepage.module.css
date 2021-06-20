@@ -1,0 +1,55 @@
+.text {
+  font-size: 300%;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  background: #03001e; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to right,
+    #fdeff9,
+    #ec38bc,
+    #7303c0,
+    #03001e
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to right,
+    #fdeff9,
+    #ec38bc,
+    #7303c0,
+    #03001e
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 600;
+}
+
+.button {
+  width: 20%;
+  height: 5%;
+  position: absolute;
+  background-color: #38a16a;
+  border: 3px solid #38a16a;
+  border-radius: 5px;
+}
+
+.textarea {
+  width: 20%;
+  font-size: 120%;
+  padding: 0.7%;
+  padding-bottom: 2.4%;
+  height: 6%;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  border-radius: 5px;
+  border: 2px solid #e2e8f0;
+}
+
+.darkMode {
+  background-color: #1e1e1e;
+  height: 100vh;
+  margin-bottom: 100px;
+}
+.lightMode {
+  background-color: #fff;
+  height: 100h;
+  margin-bottom: 100px;
+}
