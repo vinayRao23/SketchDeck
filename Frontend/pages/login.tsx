@@ -45,14 +45,21 @@ export const login = ({ myProviders }: IProps) => {
           }}
         />
         <div>
-          <p style={{ marginTop: "33%", marginLeft: "23.5%", fontWeight: 300 }}>
+          <p
+            style={{
+              marginTop: "33%",
+              marginLeft: "23.5%",
+              fontWeight: 300,
+              fontFamily: "Finger Paint",
+            }}
+          >
             Login To Your Account
           </p>
           <p
             style={{
               marginTop: "-1%",
-              marginLeft: "11.75%",
-              fontWeight: "lighter",
+              marginLeft: "10%",
+              fontFamily: "Finger Paint",
             }}
           >
             Welcome To SketchDeck. To Start Playing, Login To Your Account Here.{" "}
@@ -60,7 +67,12 @@ export const login = ({ myProviders }: IProps) => {
         </div>
         <div>
           <h2
-            style={{ marginLeft: "55%", marginTop: "-30%", fontSize: "200%" }}
+            style={{
+              marginLeft: "55%",
+              marginTop: "-30%",
+              fontSize: "200%",
+              fontFamily: "Finger Paint",
+            }}
           >
             Welcome To SketchDeck
           </h2>
@@ -69,6 +81,7 @@ export const login = ({ myProviders }: IProps) => {
               marginLeft: "55.25%",
               marginTop: "-1%",
               fontWeight: 200,
+              fontFamily: "Finger Paint",
             }}
           >
             By signing in you accept our
@@ -78,6 +91,7 @@ export const login = ({ myProviders }: IProps) => {
               marginLeft: "55.25%",
               marginTop: "-0.75%",
               fontWeight: 200,
+              fontFamily: "Finger Paint",
             }}
           >
             <a

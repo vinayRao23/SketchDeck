@@ -16,6 +16,7 @@
   font-weight: bold;
   font-size: 110%;
   border-radius: 1.5%;
+  font-family: "Finger Paint";
 }
 
 .btnGithub:hover,
@@ -33,6 +34,7 @@
   font-weight: bold;
   font-size: 110%;
   border-radius: 1.5%;
+  font-family: "Finger Paint";
 }
 
 .btnGoogle:hover,

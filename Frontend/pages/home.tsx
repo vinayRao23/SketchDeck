@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import styles from "../styles/Homepage.module.css";
 import { signOut, useSession } from "next-auth/client";
-import { Button, Switch } from "@material-ui/core";
+import { Switch } from "@material-ui/core";
 import { GET_USER_ID } from "../Apollo/GetUserIdQuery";
 import { TOGGLE_THEME } from "../Apollo/ToggleThemeMutation";
 import { useMutation, useQuery } from "@apollo/client";
+import { useRouter } from "next/dist/client/router";
 
 export const home = () => {
   const [user, setUser] = useState<any>({});
@@ -44,7 +45,7 @@ export const home = () => {
             top: "1%",
             position: "relative",
           }}
-          className={styles.text}
+          className={"text"}
         >
           <h1>SketchDeck</h1>
         </div>
@@ -80,8 +81,7 @@ export const home = () => {
           <button
             className={styles.button}
             style={{
-              fontFamily:
-                " -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Open Sans, Helvetica Neue, sans-serif",
+              fontFamily: "Finger Paint",
               fontWeight: 500,
               color: "#fff",
               cursor: "pointer",
@@ -93,9 +93,9 @@ export const home = () => {
         <div style={{ marginTop: "8%", marginLeft: "40%" }}>
           <button
             className={styles.button}
+            onClick={() => (window.location.href = "/room")}
             style={{
-              fontFamily:
-                " -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Open Sans, Helvetica Neue, sans-serif",
+              fontFamily: "Finger Paint",
               fontWeight: 500,
               color: "#fff",
               cursor: "pointer",
@@ -135,28 +135,20 @@ export const home = () => {
             position: "absolute",
           }}
         >
-          {/* <Switch
-            onChange={() => {
+          <Switch
+            onChange={async () => {
               setDarkMode(!darkMode);
-             
+              await toggleTheme({
+                variables: {
+                  theme: !darkMode ? "dark" : "light",
+                  id: user.id,
+                },
+              });
               console.log(user);
             }}
             checked={darkMode}
             value={darkMode}
-          /> */}
-          <Button
-            onClick={() => {
-              setDarkMode(!darkMode);
-              toggleTheme({
-                variables: {
-                  theme: darkMode ? "dark" : "light",
-                  id: user.id,
-                },
-              });
-            }}
-          >
-            Toggle Theme
-          </Button>
+          />
         </div>
       </div>
     </React.Fragment>
