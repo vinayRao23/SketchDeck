@@ -1,5 +1,6 @@
 type Query {
   getAllUsers: [User]
+  getUserId(email: String): [String]
 }
 
 type Mutation {
@@ -10,6 +11,7 @@ type Mutation {
     id: String
   ): Boolean!
   loginUser(email: String): Boolean!
+  toggleTheme(theme: String, id: String): Boolean
 }
 
 type User {
@@ -17,4 +19,5 @@ type User {
   email: String
   profilePicture: String
   id: String
+  theme: String
 }

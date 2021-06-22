@@ -3,4 +3,5 @@ export interface UserArgsInt {
   email: string;
   profilePicture: string;
   id: string;
+  theme: string;
 }

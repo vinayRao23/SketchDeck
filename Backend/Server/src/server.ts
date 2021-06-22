@@ -18,7 +18,7 @@ app.use("*", cors() as any);
 app.use(compression());
 connectToDB();
 server.applyMiddleware({ app, path: "/graphql" });
-const port = process.env.PORT || 4000;
+const port = process.env.PORT || 4001;
 server.applyMiddleware({
   app,
   path: "/graphql",
