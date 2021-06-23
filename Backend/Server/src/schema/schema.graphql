@@ -12,6 +12,7 @@ type Mutation {
   ): Boolean!
   loginUser(email: String): Boolean!
   toggleTheme(theme: String, id: String): Boolean
+  Id(value: String): Boolean
 }
 
 type User {

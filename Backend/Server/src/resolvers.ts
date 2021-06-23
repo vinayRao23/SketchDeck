@@ -1,6 +1,8 @@
 import { IResolvers } from "graphql-tools";
+import { IdArgsInt } from "./Interfaces/IdArgsInt";
 import { UserArgsInt } from "./Interfaces/UserArgsInt";
 const { User } = require("../../DataBase/src/Models/User");
+const { Id } = require("../../DataBase/src/Models/Id");
 
 const resolvers: IResolvers = {
   Query: {
@@ -49,6 +51,16 @@ const resolvers: IResolvers = {
         const user = await User.findOne({ where: { id: args.id } });
         user.theme = args.theme;
         await user.save();
+      } catch (error) {
+        console.log(error);
+      }
+      return true;
+    },
+    Id: async (_: void, args: IdArgsInt) => {
+      try {
+        await Id.sync({ force: true });
+        const id = await Id.build({ value: args.value });
+        await id.save();
       } catch (error) {
         console.log(error);
       }
