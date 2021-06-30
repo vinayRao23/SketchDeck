@@ -6,8 +6,8 @@ import { useRouter } from "next/dist/client/router";
 import { GET_USER_ID } from "../Apollo/GetUserIdQuery";
 import { useQuery } from "@apollo/client";
 import { useSession } from "next-auth/client";
-import ArrowDropDownCircleRounded from "@material-ui/icons/ArrowDropDownCircleRounded";
 import { ArrowDropDown } from "@material-ui/icons";
+import { generateId } from "../utils/GenerateId";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -31,6 +31,10 @@ const room = () => {
   const [drawTime, setDrawTime] = useState("");
   const [drawTimeOpen, setDrawTimeOpen] = useState(false);
   const [roundOpen, setRoundOpen] = useState(false);
+  const [roundFilledOut, setRoundFilledOut] = useState(false);
+  const [timeFilledOut, setTimeFilledOut] = useState(false);
+  const [id, setId] = useState("");
+  const [copied, setCopied] = useState("Copy Url");
 
   useEffect(() => {
     if (data)
@@ -45,11 +49,31 @@ const room = () => {
   }, [typeof user, typeof data, typeof session]);
 
   useEffect(() => {
+    if (copied === "Copied!") {
+      setTimeout(() => {
+        setCopied("Copy Url");
+      }, 1000);
+    }
+  }, [copied]);
+
+  useEffect(() => {
     if (user && user.theme === "dark") {
       setDarkMode(true);
     }
+    const gameid = generateId(24);
+    setId(gameid);
   }, [user]);
-
+  const copyElementText = (id: string) => {
+    if (document.getElementById(id)) {
+      var text = document.getElementById(id)?.innerText;
+      var elem = document.createElement("textarea");
+      document.body.appendChild(elem);
+      (elem.value as any) = text;
+      elem.select();
+      document.execCommand("copy");
+      document.body.removeChild(elem);
+    }
+  };
   return (
     <>
       <div
@@ -101,14 +125,30 @@ const room = () => {
                 color: darkMode ? "#fff" : "#000",
               }}
             >
-              <MenuItem value={3}>Three</MenuItem>
-              <MenuItem value={4}>Four</MenuItem>
-              <MenuItem value={5}>Five</MenuItem>
-              <MenuItem value={6}>Six</MenuItem>
-              <MenuItem value={7}>Seven</MenuItem>
-              <MenuItem value={8}>Eight</MenuItem>
-              <MenuItem value={9}>Nine</MenuItem>
-              <MenuItem value={10}>Ten</MenuItem>
+              <MenuItem value={3} onClick={() => setRoundFilledOut(true)}>
+                Three
+              </MenuItem>
+              <MenuItem value={4} onClick={() => setRoundFilledOut(true)}>
+                Four
+              </MenuItem>
+              <MenuItem value={5} onClick={() => setRoundFilledOut(true)}>
+                Five
+              </MenuItem>
+              <MenuItem value={6} onClick={() => setRoundFilledOut(true)}>
+                Six
+              </MenuItem>
+              <MenuItem value={7} onClick={() => setRoundFilledOut(true)}>
+                Seven
+              </MenuItem>
+              <MenuItem value={8} onClick={() => setRoundFilledOut(true)}>
+                Eight
+              </MenuItem>
+              <MenuItem value={9} onClick={() => setRoundFilledOut(true)}>
+                Nine
+              </MenuItem>
+              <MenuItem value={10} onClick={() => setRoundFilledOut(true)}>
+                Ten
+              </MenuItem>
             </Select>
           </FormControl>
         </div>
@@ -146,17 +186,73 @@ const room = () => {
                 color: darkMode ? "#fff" : "#000",
               }}
             >
-              <MenuItem value={10}>Ten</MenuItem>
-              <MenuItem value={20}>Twenty</MenuItem>
-              <MenuItem value={30}>Thirty</MenuItem>
-              <MenuItem value={40}>Forty</MenuItem>
-              <MenuItem value={50}>Fifty</MenuItem>
-              <MenuItem value={60}>Sixty</MenuItem>
-              <MenuItem value={70}>Seventy</MenuItem>
-              <MenuItem value={80}>Eighty</MenuItem>
+              <MenuItem value={10} onClick={() => setTimeFilledOut(true)}>
+                Ten
+              </MenuItem>
+              <MenuItem value={20} onClick={() => setTimeFilledOut(true)}>
+                Twenty
+              </MenuItem>
+              <MenuItem value={30} onClick={() => setTimeFilledOut(true)}>
+                Thirty
+              </MenuItem>
+              <MenuItem value={40} onClick={() => setTimeFilledOut(true)}>
+                Forty
+              </MenuItem>
+              <MenuItem value={50} onClick={() => setTimeFilledOut(true)}>
+                Fifty
+              </MenuItem>
+              <MenuItem value={60} onClick={() => setTimeFilledOut(true)}>
+                Sixty
+              </MenuItem>
+              <MenuItem value={70} onClick={() => setTimeFilledOut(true)}>
+                Seventy
+              </MenuItem>
+              <MenuItem value={80} onClick={() => setTimeFilledOut(true)}>
+                Eighty
+              </MenuItem>
             </Select>
           </FormControl>
         </div>
+        {roundFilledOut && timeFilledOut ? (
+          <div>
+            <p
+              style={{
+                color: darkMode ? "#fff" : "#000",
+                marginLeft: "15%",
+                marginTop: "7%",
+                fontSize: "200%",
+              }}
+            >
+              Link to share:{" "}
+              <a
+                style={{ textDecoration: "underline", cursor: "pointer" }}
+                href="http://localhost:3000/game/${id}"
+                target="_blank"
+                id="myUrl"
+              >
+                http://localhost:3000/game/{id}
+              </a>
+            </p>
+            <button
+              onClick={() => {
+                copyElementText("myUrl");
+                setCopied("Copied!");
+              }}
+              style={{
+                cursor: "pointer",
+                width: "20%",
+                height: " 5%",
+                position: "absolute",
+                backgroundColor: "#F278D1",
+                border: "3px solid #F278D1",
+                borderRadius: "5px",
+                marginLeft: "40%",
+              }}
+            >
+              {copied}
+            </button>
+          </div>
+        ) : null}
       </div>
     </>
   );

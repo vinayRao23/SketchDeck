@@ -1,10 +1,17 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styles from "../styles/Landingpage.module.css";
 import Wave from "../components/Wave";
 import { useRouter } from "next/dist/client/router";
+import { useSession } from "next-auth/client";
 
 export default function Home() {
   const router = useRouter();
+  const [session] = useSession();
+  useEffect(() => {
+    if (session) {
+      router.push("/home");
+    }
+  }, [session]);
   return (
     <div>
       <img
