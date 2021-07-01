@@ -4,10 +4,11 @@ import { useState } from "react";
 import { FormControl, InputLabel, MenuItem, Select } from "@material-ui/core";
 import { useRouter } from "next/dist/client/router";
 import { GET_USER_ID } from "../Apollo/GetUserIdQuery";
-import { useQuery } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
 import { useSession } from "next-auth/client";
 import { ArrowDropDown } from "@material-ui/icons";
 import { generateId } from "../utils/GenerateId";
+import { ID_MUTATION } from "../Apollo/IdMutation";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -24,6 +25,7 @@ const room = () => {
   const [user, setUser] = useState<any>({});
   const [darkMode, setDarkMode] = useState(false);
   const [session] = useSession();
+  const [Id] = useMutation(ID_MUTATION);
   const { data } = useQuery(GET_USER_ID, {
     variables: { email: session?.user.email },
   });
@@ -56,12 +58,22 @@ const room = () => {
     }
   }, [copied]);
 
+  const handleId = async () => {
+    const gameid = generateId(24);
+    await Id({
+      variables: {
+        value: gameid,
+      },
+    });
+    setId(gameid);
+  };
+
   useEffect(() => {
     if (user && user.theme === "dark") {
       setDarkMode(true);
     }
-    const gameid = generateId(24);
-    setId(gameid);
+
+    handleId();
   }, [user]);
   const copyElementText = (id: string) => {
     if (document.getElementById(id)) {
