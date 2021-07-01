@@ -14,6 +14,15 @@ const resolvers: IResolvers = {
       const user = await User.findOne({ where: { email: args.email } });
       return [user.id, user.theme];
     },
+    getGamePaths: async (_: void, __: void) => {
+      const paths = await Id.findAll();
+      const pathsArr: any[] = [];
+      for (const path of paths) {
+        const allPaths = path.dataValues.value;
+        pathsArr.push(allPaths);
+      }
+      return pathsArr;
+    },
   },
   Mutation: {
     registerUser: async (_: void, args: UserArgsInt) => {
@@ -58,7 +67,7 @@ const resolvers: IResolvers = {
     },
     Id: async (_: void, args: IdArgsInt) => {
       try {
-        await Id.sync({ force: true });
+        // await Id.sync({ force: true });
         const id = await Id.build({ value: args.value });
         await id.save();
       } catch (error) {

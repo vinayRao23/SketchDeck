@@ -1,6 +1,7 @@
 type Query {
   getAllUsers: [User]
   getUserId(email: String): [String]
+  getGamePaths: [String]
 }
 
 type Mutation {
